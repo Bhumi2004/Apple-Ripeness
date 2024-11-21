@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Ripeness Detection</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        h1 {
+            background-color: #2f855a;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        #intro {
+            background-color: #e2f1e4;
+            border: 2px dashed #2f855a;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 800px;
+            border-radius: 12px;
+        }
+
+        #intro h2 {
+            color: #2f855a;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        #intro p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        #startButton, #stopButton {
+            background-color: #48bb78;
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        #startButton:hover, #stopButton:hover {
+            background-color: #2f855a;
+        }
+
+        /* Video Container Styles */
+        #videoContainer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #videoContainer img {
+            border-radius: 10px;
+            border: 2px solid #48bb78;
+        }
+
+        /* Layout Adjustments */
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Apple Detection Live Feed</h1>
+
+    <!-- Introduction Section -->
+    <div id="intro">
+        <h2>Welcome to the Apple Ripeness Detection Tool!</h2>
+        <p>Monitor the ripeness of apples in your orchard with this tool. Click the button below to start the detection using your webcam.</p>
+        
+        <!-- Button to start the webcam feed -->
+        <button id="startButton">Start Apple Detection</button>
+    </div>
+
+    <!-- Container for the video feed and stop button -->
+    <div id="videoContainer">
+        <div class="center-content">
+            <img id="videoFeed" src="" width="640" height="480" alt="Apple Detection Feed">
+        </div>
+        <br>
+        <!-- Button to stop the webcam feed -->
+        <button id="stopButton">Stop Apple Detection</button>
+    </div>
+
+    <script>
+        // Get the HTML elements
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const videoContainer = document.getElementById('videoContainer');
+        const videoFeed = document.getElementById('videoFeed');
+        const introSection = document.getElementById('intro');
+
+        // Event listener for the start button
+        startButton.addEventListener('click', function() {
+            // Hide the intro section
+            introSection.style.display = 'none';
+            
+            // Show the video container
+            videoContainer.style.display = 'block';
+
+            // Set the source of the video feed
+            videoFeed.src = "{{ url_for('video_feed') }}";
+        });
+
+        // Event listener for the stop button
+        stopButton.addEventListener('click', function() {
+            // Hide the video container
+            videoContainer.style.display = 'none';
+
+            // Show the intro section again
+            introSection.style.display = 'block';
+
+            // Stop the video feed by removing the src attribute
+            videoFeed.src = '';
+        });
+    </script>
+</body>
+</html>
