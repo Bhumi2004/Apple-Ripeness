@@ -17,10 +17,14 @@ mongo = PyMongo(app)
 model = YOLO('yolov10n.pt')
 
 # Initialize the webcam
+import os
+
+# Try opening webcam, else fallback to a sample video file
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
-    print("Error: Could not open webcam")
-    exit()
+    print("Warning: Webcam not accessible. Falling back to sample video.")
+    cap = cv2.VideoCapture("sample_video.mp4")  # Add a sample video file
+
 
 # Helper function for classifying apples
 def classify_apple(frame, boxes, labels, classes):
@@ -155,7 +159,9 @@ def video_feed():
 
 if __name__ == '__main__':
     try:
-        app.run(debug=True)
+        port = int(os.environ.get("PORT", 5000))  # Get Render's assigned port
+        app.run(host="0.0.0.0", port=port, debug=True)
     finally:
         cap.release()
         cv2.destroyAllWindows()
+
