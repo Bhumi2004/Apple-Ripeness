@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Use a strong secret key for session management
 
 # MongoDB setup
-app.config['MONGO_URI'] = os.getenv("MONGO_URI")  # Use environment variable for security
+app.config['MONGO_URI'] = 'mongodb+srv://bhumijain:test123@cluster0.kzxid0j.mongodb.net/node-tuts?retryWrites=true&w=majority'  # Replace with your MongoDB URI
 mongo = PyMongo(app)
 
 # Load YOLO model
